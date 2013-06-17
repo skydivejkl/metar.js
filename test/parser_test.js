@@ -44,7 +44,7 @@ describe("METAR parser", function() {
         });
         it("can parse variable directions", function(){
             var m = parseMetar("EFHF 171820Z AUTO 29007KT 240V330 CAVOK 15/11 Q1010");
-            assert.deepEqual([240, 330], m.wind.variation);
+            assert.deepEqual({min: 240, max: 330}, m.wind.variation);
         });
         it("can parse small variable directions", function(){
             var m = parseMetar("EFVA 171850Z AUTO VRB02KT CAVOK 15/11 Q1008");

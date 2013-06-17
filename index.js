@@ -72,10 +72,10 @@ METAR.prototype.parseWind = function() {
     var varMatch;
     if (varMatch = this.peek().match(variableWind)) {
         this.next();
-        this.result.wind.variation = [
-            asInt(varMatch[1]),
-            asInt(varMatch[2]),
-        ];
+        this.result.wind.variation = {
+            min: asInt(varMatch[1]),
+            max: asInt(varMatch[2])
+        };
     }
 };
 
