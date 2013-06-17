@@ -1,0 +1,12 @@
+{
+  "name": "metar",
+  "version": "0.0.0",
+  "description": "METAR weather report parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "",
+  "license": "MIT"
+}
