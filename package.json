@@ -1,12 +1,12 @@
 {
   "name": "metar",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "METAR weather report parser",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test"
   },
-  "repository": "",
-  "author": "",
+  "repository": "https://github.com/epeli/metarjs.git",
+  "author": "Esa-Matti Suuronen",
   "license": "MIT"
 }
