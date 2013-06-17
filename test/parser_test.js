@@ -76,6 +76,11 @@ describe("METAR parser", function() {
             var m = parseMetar("EFET 171920Z AUTO 04007KT 010V070 9999 OVC035 09/05 Q1009");
             assert.equal(9999, m.visibility);
         });
+        it("can skip missing visibility", function(){
+            var m = parseMetar("EFHF 172050Z AUTO 26003KT //// SKC 13/10 Q1012");
+            assert.equal(null, m.visibility);
+            assert.deepEqual([{ type: "SKC", height: null }], m.clouds);
+        });
     });
 
     describe("for weather conditions", function() {

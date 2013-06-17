@@ -90,6 +90,10 @@ METAR.prototype.parseCavok = function() {
 METAR.prototype.parseVisibility = function() {
     if (this.result.cavok) return;
     this.next();
+    if (this.current === "////") {
+        this.result.visibility = null;
+        return;
+    }
     this.result.visibility = asInt(this.current.slice(0,4));
     // TODO: Direction too. I've not seen it in finnish METARs...
 };
