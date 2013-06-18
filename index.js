@@ -149,31 +149,45 @@ METAR.prototype.parseWeatherAttribute = function() {
     }
 };
 
-
-var clouds = {
-    SKC: true,
-    CLR: true,
-    NSC: true,
-    FEW: true,
-    SCT: true,
-    BKN: true,
-    OVC: true
+var CLOUDS = {
+    NCD: "No clouds",
+    SKC: "Sky clear",
+    CLR: "No clouds under 12,000 ft",
+    NSC: "No significant",
+    FEW: "Few",
+    SCT: "Scattered",
+    BKN: "Broken",
+    OVC: "Overcast",
+    VV: "Clouds"
 };
+
+function parseAbbreviation(s, map) {
+    var abbreviation, meaning, length = 3;
+    if (!s) return;
+    while (length && !meaning) {
+        abbreviation = s.slice(0, length);
+        meaning = map[abbreviation];
+        length--;
+    }
+    if (meaning) {
+        return {
+            abbreviation: abbreviation,
+            meaning: meaning
+        };
+    }
+}
 
 METAR.prototype.parseClouds = function() {
     if (this.result.cavok) return;
-    var type = this.peek().slice(0,3);
-    if (!clouds[type]) return;
+    var cloud = parseAbbreviation(this.peek(), CLOUDS);
+    if (!cloud) return;
 
     this.next();
+
+    cloud.height = asInt(this.current.slice(cloud.abbreviation.length))*100 || null;
+
     this.result.clouds = (this.result.clouds || []);
-
-    var height = this.current.slice(3,6);
-
-    this.result.clouds.push({
-        type: type,
-        height: height ? asInt(height)*100 : null
-    });
+    this.result.clouds.push(cloud);
 
     this.parseClouds();
 };

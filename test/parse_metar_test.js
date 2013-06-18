@@ -79,7 +79,11 @@ describe("METAR parser", function() {
         it("can skip missing visibility", function(){
             var m = parseMetar("EFHF 172050Z AUTO 26003KT //// SKC 13/10 Q1012");
             assert.equal(null, m.visibility);
-            assert.deepEqual([{ type: "SKC", height: null }], m.clouds);
+            assert.deepEqual([{
+                abbreviation: "SKC",
+                meaning: "Sky clear",
+                height: null
+            }], m.clouds);
         });
     });
 
@@ -101,20 +105,61 @@ describe("METAR parser", function() {
     describe("for clouds", function() {
         it("can parse single cloud level", function(){
             var m = parseMetar("EFET 171920Z AUTO 04007KT 010V070 9999 OVC035 09/05 Q1009");
-            assert.deepEqual([{ type: "OVC", height: 3500 }], m.clouds);
+            assert.deepEqual([{
+                abbreviation: "OVC",
+                meaning: "Overcast",
+                height: 3500
+            }], m.clouds);
         });
         it("can parse multiple cloud levels", function(){
             var m = parseMetar("EFVR 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006");
-            assert.deepEqual([
-                { type: "FEW", height: 1200 },
-                { type: "SCT", height: 1500 },
-                { type: "BKN", height: 6000 }
-            ], m.clouds);
+            assert.deepEqual({
+                abbreviation: "FEW",
+                meaning: "Few",
+                height: 1200
+            }, m.clouds[0]);
+            assert.deepEqual({
+                abbreviation: "SCT",
+                meaning: "Scattered",
+                height: 1500
+            }, m.clouds[1]);
+            assert.deepEqual({
+                abbreviation: "BKN",
+                meaning: "Broken",
+                height: 6000
+            }, m.clouds[2]);
         });
 
         it("can parse without height", function() {
             var m = parseMetar("EFKI 172020Z AUTO 00000KT 2600 BR SKC 09/09 Q1006");
-            assert.deepEqual([{"type":"SKC","height": null}], m.clouds);
+            assert.deepEqual([{
+                abbreviation: "SKC",
+                height: null,
+                meaning: "Sky clear"
+            }], m.clouds);
+
+            assert.equal(2600, m.visibility);
+
+        });
+
+        it("can parse NCD (no clouds)", function(){
+            var m = parseMetar("EFKA 181750Z AUTO 30007KT //// NCD 16/04 Q1015");
+            assert.equal(null, m.visibility);
+            assert.deepEqual([{
+                "abbreviation":"NCD",
+                "height": null,
+                "meaning": "No clouds"
+            }], m.clouds);
+        });
+
+        it("can parse NSC (no significant clouds)", function(){
+            var m = parseMetar("EFKA 181750Z AUTO 30007KT //// NSC 16/04 Q1015");
+            assert.equal(null, m.visibility);
+            assert.deepEqual([{
+                "abbreviation":"NSC",
+                "height": null,
+                "meaning":"No significant"
+            }], m.clouds);
         });
 
     });
