@@ -1,6 +1,59 @@
 
+// http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
+// http://en.wikipedia.org/wiki/METAR
+
+var CLOUDS = {
+    NCD: "No clouds",
+    SKC: "Sky clear",
+    CLR: "No clouds under 12,000 ft",
+    NSC: "No significant",
+    FEW: "Few",
+    SCT: "Scattered",
+    BKN: "Broken",
+    OVC: "Overcast",
+    VV: "Vertical visibility"
+};
+
+
+var weather = {
+    specifier: ["-", "+", "VC", "RE"],
+    nature: ["MI", "BC", "PR", "DR", "BL", "SH", "FZ"],
+    rain: ["DZ", "RA", "SN", "SG", "IC", "PL", "GR", "GS", "UP"],
+    visibility: ["BR", "FG", "FU", "VA", "DU", "SA", "HZ"],
+    other: ["PO", "SQ", "FC", "SS", "DS"],
+    all: {}
+};
+
+[
+    weather.specifier,
+    weather.nature,
+    weather.rain,
+    weather.visibility,
+    weather.other
+].forEach(function(attributes) {
+    attributes.forEach(function(attr) {
+        weather.all[attr] = attr;
+    });
+});
+
 function asInt(s) {
     return parseInt(s, 10);
+}
+
+function parseAbbreviation(s, map) {
+    var abbreviation, meaning, length = 3;
+    if (!s) return;
+    while (length && !meaning) {
+        abbreviation = s.slice(0, length);
+        meaning = map[abbreviation];
+        length--;
+    }
+    if (meaning) {
+        return {
+            abbreviation: abbreviation,
+            meaning: meaning
+        };
+    }
 }
 
 function METAR(metarString) {
@@ -107,26 +160,6 @@ METAR.prototype.parseRunwayVisibility = function() {
 };
 
 
-var weather = {
-    specifier: ["-", "+", "VC", "RE"],
-    nature: ["MI", "BC", "PR", "DR", "BL", "SH", "FZ"],
-    rain: ["DZ", "RA", "SN", "SG", "IC", "PL", "GR", "GS", "UP"],
-    visibility: ["BR", "FG", "FU", "VA", "DU", "SA", "HZ"],
-    other: ["PO", "SQ", "FC", "SS", "DS"],
-    all: {}
-};
-
-[
-    weather.specifier,
-    weather.nature,
-    weather.rain,
-    weather.visibility,
-    weather.other
-].forEach(function(attributes) {
-    attributes.forEach(function(attr) {
-        weather.all[attr] = attr;
-    });
-});
 
 function sliceWeatherAttribute(s) {
     return weather.all[s.slice(0, 1)] || weather.all[s.slice(0, 2)];
@@ -149,33 +182,6 @@ METAR.prototype.parseWeatherAttribute = function() {
     }
 };
 
-var CLOUDS = {
-    NCD: "No clouds",
-    SKC: "Sky clear",
-    CLR: "No clouds under 12,000 ft",
-    NSC: "No significant",
-    FEW: "Few",
-    SCT: "Scattered",
-    BKN: "Broken",
-    OVC: "Overcast",
-    VV: "Clouds"
-};
-
-function parseAbbreviation(s, map) {
-    var abbreviation, meaning, length = 3;
-    if (!s) return;
-    while (length && !meaning) {
-        abbreviation = s.slice(0, length);
-        meaning = map[abbreviation];
-        length--;
-    }
-    if (meaning) {
-        return {
-            abbreviation: abbreviation,
-            meaning: meaning
-        };
-    }
-}
 
 METAR.prototype.parseClouds = function() {
     if (this.result.cavok) return;
