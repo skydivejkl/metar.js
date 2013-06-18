@@ -1,6 +1,6 @@
 # metar.js
 
-[METAR](http://en.wikipedia.org/wiki/METAR) (Meteorological Aviation Report) parser
+[METAR](http://en.wikipedia.org/wiki/METAR) (Meteorological Aviation Report) parser for Javascript
 
 
 ## Install
