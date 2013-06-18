@@ -16,30 +16,50 @@ var CLOUDS = {
 };
 
 
-var weather = {
-    specifier: ["-", "+", "VC", "RE"],
-    nature: ["MI", "BC", "PR", "DR", "BL", "SH", "FZ"],
-    rain: ["DZ", "RA", "SN", "SG", "IC", "PL", "GR", "GS", "UP"],
-    visibility: ["BR", "FG", "FU", "VA", "DU", "SA", "HZ"],
-    other: ["PO", "SQ", "FC", "SS", "DS"],
-    all: {}
+var WEATHER = {
+    // Intensity
+    "-": "Light intensity",
+    "+": "Heavy intensity",
+    VC: "In the vicinity",
+
+    // Descriptor
+    MI: "Shallow",
+    PR: "Partial",
+    BC: "Patches",
+    DR: "Low drifting",
+    BL: "Blowing",
+    SH: "Showers",
+    TS: "Thunderstorm",
+    FZ: "Freezing",
+
+    // Precipitation
+    RA: "Rain",
+    DZ: "Drizzle",
+    SN: "Snow",
+    SG: "Snow grains",
+    IC: "Ice crystals",
+    PL: "Ice pellets",
+    GR: "Hail",
+    GS: "Small hail",
+    UP: "Unknown precipitation",
+
+    // Obscuration
+    FG: "Fog",
+    VA: "Volcanic Ash",
+    BR: "Mist",
+    HZ: "Haze",
+    DU: "Widespread Dust",
+    FU: "Smoke",
+    SA: "Sand",
+    PY: "Spray",
+
+    // Other
+    SQ: "Squall",
+    PO: "Dust or Sand Whirls",
+    DS: "Duststorm",
+    SS: "Sandstorm",
+    FC: "Funnel Cloud",
 };
-
-[
-    weather.specifier,
-    weather.nature,
-    weather.rain,
-    weather.visibility,
-    weather.other
-].forEach(function(attributes) {
-    attributes.forEach(function(attr) {
-        weather.all[attr] = attr;
-    });
-});
-
-function asInt(s) {
-    return parseInt(s, 10);
-}
 
 function parseAbbreviation(s, map) {
     var abbreviation, meaning, length = 3;
@@ -57,6 +77,9 @@ function parseAbbreviation(s, map) {
     }
 }
 
+function asInt(s) {
+    return parseInt(s, 10);
+}
 function METAR(metarString) {
     this.fields = metarString.split(" ");
     this.i = -1;
@@ -162,25 +185,23 @@ METAR.prototype.parseRunwayVisibility = function() {
 
 
 
-function sliceWeatherAttribute(s) {
-    return weather.all[s.slice(0, 1)] || weather.all[s.slice(0, 2)];
+function parseWeatherAbbrv(s, res) {
+    var weather = parseAbbreviation(s, WEATHER);
+    if (weather) {
+        res = res || [];
+        res.push(weather.abbreviation);
+        return parseWeatherAbbrv(s.slice(weather.abbreviation.length), res);
+    }
+    return res;
 }
 
 METAR.prototype.parseWeather = function() {
     if (this.result.cavok) return;
-    if (!sliceWeatherAttribute(this.peek())) return;
-    this.next();
-    this.result.weather = [];
-    this.parseWeatherAttribute();
-};
+    var weather = parseWeatherAbbrv(this.peek());
+    if (!weather) return;
 
-METAR.prototype.parseWeatherAttribute = function() {
-    var attr = sliceWeatherAttribute(this.current);
-    if (attr) {
-        this.result.weather.push(attr);
-        this.current = this.current.slice(attr.length);
-        this.parseWeatherAttribute();
-    }
+    this.result.weather = weather;
+    this.next();
 };
 
 
