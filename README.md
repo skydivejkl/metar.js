@@ -1,5 +1,4 @@
-
-# metarjs
+# metar.js
 
 [METAR](http://en.wikipedia.org/wiki/METAR) (Meteorological Aviation Report) parser
 
