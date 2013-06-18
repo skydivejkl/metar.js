@@ -212,7 +212,7 @@ METAR.prototype.parseClouds = function() {
 
     this.next();
 
-    cloud.height = asInt(this.current.slice(cloud.abbreviation.length))*100 || null;
+    cloud.altitude = asInt(this.current.slice(cloud.abbreviation.length))*100 || null;
 
     this.result.clouds = (this.result.clouds || []);
     this.result.clouds.push(cloud);

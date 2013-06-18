@@ -82,7 +82,7 @@ describe("METAR parser", function() {
             assert.deepEqual([{
                 abbreviation: "SKC",
                 meaning: "Sky clear",
-                height: null
+                altitude: null
             }], m.clouds);
         });
     });
@@ -108,7 +108,7 @@ describe("METAR parser", function() {
             assert.deepEqual([{
                 abbreviation: "OVC",
                 meaning: "Overcast",
-                height: 3500
+                altitude: 3500
             }], m.clouds);
         });
         it("can parse multiple cloud levels", function(){
@@ -116,25 +116,25 @@ describe("METAR parser", function() {
             assert.deepEqual({
                 abbreviation: "FEW",
                 meaning: "Few",
-                height: 1200
+                altitude: 1200
             }, m.clouds[0]);
             assert.deepEqual({
                 abbreviation: "SCT",
                 meaning: "Scattered",
-                height: 1500
+                altitude: 1500
             }, m.clouds[1]);
             assert.deepEqual({
                 abbreviation: "BKN",
                 meaning: "Broken",
-                height: 6000
+                altitude: 6000
             }, m.clouds[2]);
         });
 
-        it("can parse without height", function() {
+        it("can parse without altitude", function() {
             var m = parseMetar("EFKI 172020Z AUTO 00000KT 2600 BR SKC 09/09 Q1006");
             assert.deepEqual([{
                 abbreviation: "SKC",
-                height: null,
+                altitude: null,
                 meaning: "Sky clear"
             }], m.clouds);
 
@@ -147,7 +147,7 @@ describe("METAR parser", function() {
             assert.equal(null, m.visibility);
             assert.deepEqual([{
                 abbreviation:"NCD",
-                height: null,
+                altitude: null,
                 meaning: "No clouds"
             }], m.clouds);
         });
@@ -157,7 +157,7 @@ describe("METAR parser", function() {
             assert.equal(null, m.visibility);
             assert.deepEqual([{
                 abbreviation:"NSC",
-                height: null,
+                altitude: null,
                 meaning:"No significant"
             }], m.clouds);
         });
@@ -166,7 +166,7 @@ describe("METAR parser", function() {
             var m = parseMetar("EFVR 171950Z AUTO 27006KT 220V310 9999 VV060 13/12 Q1006");
             assert.deepEqual([{
                 abbreviation:"VV",
-                height: 6000,
+                altitude: 6000,
                 meaning:"Vertical visibility"
             }], m.clouds);
         });
