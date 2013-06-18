@@ -146,9 +146,9 @@ describe("METAR parser", function() {
             var m = parseMetar("EFKA 181750Z AUTO 30007KT //// NCD 16/04 Q1015");
             assert.equal(null, m.visibility);
             assert.deepEqual([{
-                "abbreviation":"NCD",
-                "height": null,
-                "meaning": "No clouds"
+                abbreviation:"NCD",
+                height: null,
+                meaning: "No clouds"
             }], m.clouds);
         });
 
@@ -156,9 +156,18 @@ describe("METAR parser", function() {
             var m = parseMetar("EFKA 181750Z AUTO 30007KT //// NSC 16/04 Q1015");
             assert.equal(null, m.visibility);
             assert.deepEqual([{
-                "abbreviation":"NSC",
-                "height": null,
-                "meaning":"No significant"
+                abbreviation:"NSC",
+                height: null,
+                meaning:"No significant"
+            }], m.clouds);
+        });
+
+        it("can parse VV", function(){
+            var m = parseMetar("EFVR 171950Z AUTO 27006KT 220V310 9999 VV060 13/12 Q1006");
+            assert.deepEqual([{
+                abbreviation:"VV",
+                height: 6000,
+                meaning:"Vertical visibility"
             }], m.clouds);
         });
 
