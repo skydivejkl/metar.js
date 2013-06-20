@@ -42,8 +42,17 @@
                 if (e) e.preventDefault();
                 var value = input.value || input.placeholder;
 
-                output.innerText = JSON.stringify(parseMETAR(value), null, "    ");
-                location.hash = escape(value);
+                try {
+                    var result = parseMETAR(value);
+                } catch(err) {
+                    output.innerText = "Parse error: " + err.message;
+                }
+
+                if (result) {
+                    output.innerText = JSON.stringify(parseMETAR(value), null, "    ");
+                    location.hash = escape(value);
+                }
+
             }
 
             if (location.hash) {
