@@ -4,9 +4,12 @@
   "description": "METAR weather report parser",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "mocha -C test"
   },
   "repository": "https://github.com/epeli/metarjs.git",
   "author": "Esa-Matti Suuronen",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "~1.11.0"
+  }
 }
