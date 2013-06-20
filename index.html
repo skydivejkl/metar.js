@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+    <head>
+        <title>metar.js</title>
+        <style type="text/css">
+            textarea.metar-input {
+                width: 100%;
+                max-width: 600px;
+            }
+            button.parse-metar {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <a href="https://github.com/epeli/metar.js"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 1000; margin: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+        <h1>metar.js</h1>
+        <p>
+            <a href="">METAR</a> (Meteorological Aviation Report) parser for Javascript.
+        </p>
+
+        <h2>Demo</h2>
+
+        <p>
+            Get reports for example from
+            <a href="http://weather.noaa.gov/pub/data/observations/metar/stations/">weather.noaa.gov</a>
+            or
+            <a href="http://www.yle.fi/tekstitv/txt/P428_02.html">YLE Teksti-TV</a>.
+        </p>
+
+        <textarea class="metar-input" placeholder="EFJY 201050Z AUTO 16007KT 9999 -SHRA OVC060CB 15/09 Q1017"></textarea>
+        <button class="parse-metar">Parse</button>
+        <script src="metar.js"></script>
+        <pre class="metar-result">
+        </pre>
+        <script>
+            document.querySelector("button.parse-metar").addEventListener("click", function(e) {
+                e.preventDefault();
+                var input = document.querySelector("textarea.metar-input");
+                var output = document.querySelector("pre.metar-result");
+                var result = parseMETAR(input.value || input.placeholder);
+                output.innerText = JSON.stringify(result, null, "    ");
+
+            }, false);
+        </script>
+    </body>
+</html>
