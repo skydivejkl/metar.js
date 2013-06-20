@@ -35,14 +35,27 @@
         <pre class="metar-result">
         </pre>
         <script>
-            document.querySelector("button.parse-metar").addEventListener("click", function(e) {
-                e.preventDefault();
-                var input = document.querySelector("textarea.metar-input");
-                var output = document.querySelector("pre.metar-result");
-                var result = parseMETAR(input.value || input.placeholder);
-                output.innerText = JSON.stringify(result, null, "    ");
+            (function() {
+            var input = document.querySelector("textarea.metar-input");
+            var output = document.querySelector("pre.metar-result");
+            function parse(e) {
+                if (e) e.preventDefault();
+                var value = input.value || input.placeholder;
 
-            }, false);
+                output.innerText = JSON.stringify(parseMETAR(value), null, "    ");
+                location.hash = escape(value);
+            }
+
+            if (location.hash) {
+                input.value = unescape(location.hash.substring(1));
+                parse();
+            }
+
+            document
+                .querySelector("button.parse-metar")
+                .addEventListener("click", parse , false);
+
+            }());
         </script>
     </body>
 </html>
