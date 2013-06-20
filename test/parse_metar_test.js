@@ -1,6 +1,6 @@
 /*global it:true, describe:true */
 var assert = require("assert");
-var parseMetar = require("../index");
+var parseMetar = require("../metar");
 
 
 describe("METAR parser", function() {
