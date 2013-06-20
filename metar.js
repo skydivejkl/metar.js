@@ -1,4 +1,4 @@
-
+(function() {
 // http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
 // https://ww8.fltplan.com/AreaForecast/abbreviations.htm
 // http://en.wikipedia.org/wiki/METAR
@@ -235,8 +235,18 @@ METAR.prototype.parse = function() {
 };
 
 
-module.exports = function(metarString) {
+
+function parseMETAR(metarString) {
     var m = new METAR(metarString);
     m.parse();
     return m.result;
-};
+}
+
+if (typeof module !== "undefined") {
+    module.exports = parseMETAR;
+}
+else if (typeof window !== "undefined") {
+    window.parseMETAR = parseMETAR;
+}
+
+}());
