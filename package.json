@@ -2,7 +2,7 @@
   "name": "metar",
   "version": "0.0.1",
   "description": "METAR weather report parser",
-  "main": "index.js",
+  "main": "metar.js",
   "scripts": {
     "test": "mocha -C test"
   },
