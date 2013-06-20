@@ -80,8 +80,15 @@ function parseAbbreviation(s, map) {
 function asInt(s) {
     return parseInt(s, 10);
 }
+
+
+
 function METAR(metarString) {
-    this.fields = metarString.split(" ");
+    this.fields = metarString.split(" ").map(function(f) {
+        return f.trim();
+    }).filter(function(f) {
+        return !!f;
+    });
     this.i = -1;
     this.current = null;
     this.result = {};
