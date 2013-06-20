@@ -171,6 +171,16 @@ describe("METAR parser", function() {
             }], m.clouds);
         });
 
+        it("can parse cumulonimbus", function(){
+            var m = parseMetar("EFJY 201050Z AUTO 16007KT 9999 -SHRA OVC060CB 15/09 Q1017");
+            assert.deepEqual([{
+                abbreviation: "OVC",
+                altitude: 6000,
+                meaning: "Overcast",
+                cumulonimbus: true
+            }], m.clouds);
+        });
+
     });
 
 });

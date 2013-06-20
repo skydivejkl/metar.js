@@ -213,6 +213,9 @@ METAR.prototype.parseClouds = function() {
     this.next();
 
     cloud.altitude = asInt(this.current.slice(cloud.abbreviation.length))*100 || null;
+    if (this.current.match(/CB$/)) {
+        cloud.cumulonimbus = true
+    }
 
     this.result.clouds = (this.result.clouds || []);
     this.result.clouds.push(cloud);
