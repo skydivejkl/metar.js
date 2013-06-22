@@ -173,12 +173,10 @@ METAR.prototype.parseCavok = function() {
 };
 
 METAR.prototype.parseVisibility = function() {
+    this.result.visibility = null;
     if (this.result.cavok) return;
     this.next();
-    if (this.current === "////") {
-        this.result.visibility = null;
-        return;
-    }
+    if (this.current === "////") return;
     this.result.visibility = asInt(this.current.slice(0,4));
     // TODO: Direction too. I've not seen it in finnish METARs...
 };
