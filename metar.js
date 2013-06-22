@@ -202,6 +202,7 @@ function parseWeatherAbbrv(s, res) {
 }
 
 METAR.prototype.parseWeather = function() {
+    this.result.weather = null;
     if (this.result.cavok) return;
     var weather = parseWeatherAbbrv(this.peek());
     if (!weather) return;
