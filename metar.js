@@ -213,6 +213,7 @@ METAR.prototype.parseWeather = function() {
 
 
 METAR.prototype.parseClouds = function() {
+    this.result.clouds = null;
     if (this.result.cavok) return;
     var cloud = parseAbbreviation(this.peek(), CLOUDS);
     if (!cloud) return;
