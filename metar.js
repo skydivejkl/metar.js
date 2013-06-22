@@ -169,7 +169,7 @@ METAR.prototype.parseWind = function() {
 
 METAR.prototype.parseCavok = function() {
     this.result.cavok = this.peek() === "CAVOK";
-    if (this.result.cavok ) this.next();
+    if (this.result.cavok) this.next();
 };
 
 METAR.prototype.parseVisibility = function() {
