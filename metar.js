@@ -118,10 +118,8 @@ METAR.prototype.parseDate = function() {
 };
 
 METAR.prototype.parseAuto = function() {
-    if (this.peek() === "AUTO") {
-        this.result.auto = true;
-        this.next();
-    }
+    this.result.auto = this.peek() === "AUTO";
+    if (this.result.auto) this.next();
 };
 
 var variableWind = /^([0-9]{3})V([0-9]{3})$/;
