@@ -38,19 +38,20 @@
             (function() {
             var input = document.querySelector("textarea.metar-input");
             var output = document.querySelector("pre.metar-result");
+
             function parse(e) {
                 if (e) e.preventDefault();
-                var value = input.value || input.placeholder;
+                if (!input.value.trim()) input.value = input.placeholder;
 
                 try {
-                    var result = parseMETAR(value);
+                    var result = parseMETAR(input.value);
                 } catch(err) {
                     output.innerText = "Parse error: " + err.message;
                 }
 
                 if (result) {
-                    output.innerText = JSON.stringify(parseMETAR(value), null, "    ");
-                    location.hash = escape(value);
+                    output.innerText = JSON.stringify(parseMETAR(input.value), null, "    ");
+                    location.hash = escape(input.value);
                 }
 
             }
