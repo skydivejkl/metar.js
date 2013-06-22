@@ -4,61 +4,61 @@
 // http://en.wikipedia.org/wiki/METAR
 
 var CLOUDS = {
-    NCD: "No clouds",
-    SKC: "Sky clear",
-    CLR: "No clouds under 12,000 ft",
-    NSC: "No significant",
-    FEW: "Few",
-    SCT: "Scattered",
-    BKN: "Broken",
-    OVC: "Overcast",
-    VV: "Vertical visibility"
+    NCD: "no clouds",
+    SKC: "sky clear",
+    CLR: "no clouds under 12,000 ft",
+    NSC: "no significant",
+    FEW: "few",
+    SCT: "scattered",
+    BKN: "broken",
+    OVC: "overcast",
+    VV: "vertical visibility"
 };
 
 
 var WEATHER = {
     // Intensity
-    "-": "Light intensity",
-    "+": "Heavy intensity",
-    VC: "In the vicinity",
+    "-": "light intensity",
+    "+": "heavy intensity",
+    VC: "in the vicinity",
 
     // Descriptor
-    MI: "Shallow",
-    PR: "Partial",
-    BC: "Patches",
-    DR: "Low drifting",
-    BL: "Blowing",
-    SH: "Showers",
-    TS: "Thunderstorm",
-    FZ: "Freezing",
+    MI: "shallow",
+    PR: "partial",
+    BC: "patches",
+    DR: "low drifting",
+    BL: "blowing",
+    SH: "showers",
+    TS: "thunderstorm",
+    FZ: "freezing",
 
     // Precipitation
-    RA: "Rain",
-    DZ: "Drizzle",
-    SN: "Snow",
-    SG: "Snow grains",
-    IC: "Ice crystals",
-    PL: "Ice pellets",
-    GR: "Hail",
-    GS: "Small hail",
-    UP: "Unknown precipitation",
+    RA: "rain",
+    DZ: "drizzle",
+    SN: "snow",
+    SG: "snow grains",
+    IC: "ice crystals",
+    PL: "ice pellets",
+    GR: "hail",
+    GS: "small hail",
+    UP: "unknown precipitation",
 
     // Obscuration
-    FG: "Fog",
-    VA: "Volcanic Ash",
-    BR: "Mist",
-    HZ: "Haze",
-    DU: "Widespread Dust",
-    FU: "Smoke",
-    SA: "Sand",
-    PY: "Spray",
+    FG: "fog",
+    VA: "volcanic ash",
+    BR: "mist",
+    HZ: "haze",
+    DU: "widespread dust",
+    FU: "smoke",
+    SA: "sand",
+    PY: "spray",
 
     // Other
-    SQ: "Squall",
-    PO: "Dust or Sand Whirls",
-    DS: "Duststorm",
-    SS: "Sandstorm",
-    FC: "Funnel Cloud",
+    SQ: "squall",
+    PO: "dust or sand whirls",
+    DS: "duststorm",
+    SS: "sandstorm",
+    FC: "funnel cloud"
 };
 
 function parseAbbreviation(s, map) {
