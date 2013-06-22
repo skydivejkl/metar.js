@@ -82,6 +82,7 @@ describe("METAR parser", function() {
             assert.deepEqual([{
                 abbreviation: "SKC",
                 meaning: "sky clear",
+                cumulonimbus: false,
                 altitude: null
             }], m.clouds);
         });
@@ -108,6 +109,7 @@ describe("METAR parser", function() {
             assert.deepEqual([{
                 abbreviation: "OVC",
                 meaning: "overcast",
+                cumulonimbus: false,
                 altitude: 3500
             }], m.clouds);
         });
@@ -116,16 +118,19 @@ describe("METAR parser", function() {
             assert.deepEqual({
                 abbreviation: "FEW",
                 meaning: "few",
+                cumulonimbus: false,
                 altitude: 1200
             }, m.clouds[0]);
             assert.deepEqual({
                 abbreviation: "SCT",
                 meaning: "scattered",
+                cumulonimbus: false,
                 altitude: 1500
             }, m.clouds[1]);
             assert.deepEqual({
                 abbreviation: "BKN",
                 meaning: "broken",
+                cumulonimbus: false,
                 altitude: 6000
             }, m.clouds[2]);
         });
@@ -135,6 +140,7 @@ describe("METAR parser", function() {
             assert.deepEqual([{
                 abbreviation: "SKC",
                 altitude: null,
+                cumulonimbus: false,
                 meaning: "sky clear"
             }], m.clouds);
 
@@ -148,6 +154,7 @@ describe("METAR parser", function() {
             assert.deepEqual([{
                 abbreviation:"NCD",
                 altitude: null,
+                cumulonimbus: false,
                 meaning: "no clouds"
             }], m.clouds);
         });
@@ -158,6 +165,7 @@ describe("METAR parser", function() {
             assert.deepEqual([{
                 abbreviation:"NSC",
                 altitude: null,
+                cumulonimbus: false,
                 meaning:"no significant"
             }], m.clouds);
         });
@@ -167,6 +175,7 @@ describe("METAR parser", function() {
             assert.deepEqual([{
                 abbreviation:"VV",
                 altitude: 6000,
+                cumulonimbus: false,
                 meaning:"vertical visibility"
             }], m.clouds);
         });
