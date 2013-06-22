@@ -91,15 +91,19 @@ describe("METAR parser", function() {
     describe("for weather conditions", function() {
         it("can parse it", function() {
             var m = parseMetar("EFKI 171950Z 00000KT 9999 MIFG FEW012 SCT200 10/10 Q1006");
-            assert.deepEqual(["MI", "FG"], m.weather);
+            assert.deepEqual([{"abbreviation":"MI","meaning":"shallow"},{"abbreviation":"FG","meaning":"fog"}], m.weather);
         });
         it("can parse single attribute weather", function() {
             var m = parseMetar("EFKI 172020Z AUTO 00000KT 2600 BR SKC 09/09 Q1006");
-            assert.deepEqual(["BR"], m.weather);
+            assert.deepEqual([{"abbreviation":"BR","meaning":"mist"}], m.weather);
         });
         it("can parse three attribute weather", function() {
             var m = parseMetar("ULLI 172030Z 23004MPS 9999 -SHRA SCT022CB BKN043 OVC066 13/10 Q1010 NOSIG");
-            assert.deepEqual(["-", "SH", "RA"], m.weather);
+            assert.deepEqual([
+                {"abbreviation":"-","meaning":"light intensity"},
+                {"abbreviation":"SH","meaning":"showers"},
+                {"abbreviation":"RA","meaning":"rain"}
+                ],m.weather);
         });
     });
 

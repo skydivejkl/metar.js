@@ -195,7 +195,7 @@ function parseWeatherAbbrv(s, res) {
     var weather = parseAbbreviation(s, WEATHER);
     if (weather) {
         res = res || [];
-        res.push(weather.abbreviation);
+        res.push(weather);
         return parseWeatherAbbrv(s.slice(weather.abbreviation.length), res);
     }
     return res;
