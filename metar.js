@@ -2,6 +2,7 @@
 // http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
 // https://ww8.fltplan.com/AreaForecast/abbreviations.htm
 // http://en.wikipedia.org/wiki/METAR
+// http://www.unc.edu/~haines/metar.html
 
 var CLOUDS = {
     NCD: "no clouds",
