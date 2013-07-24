@@ -88,6 +88,18 @@ describe("METAR parser", function() {
         });
     });
 
+    describe("for temperature", function() {
+        it("basic", function(){
+            var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+            assert.equal(m.temperature, 15);
+        });
+
+        it("dew point", function(){
+            var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+            assert.equal(m.dewPointTemperature, 12);
+        });
+    });
+
     describe("for weather conditions", function() {
         it("can parse it", function() {
             var m = parseMetar("EFKI 171950Z 00000KT 9999 MIFG FEW012 SCT200 10/10 Q1006");

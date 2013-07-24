@@ -230,6 +230,14 @@ METAR.prototype.parseClouds = function() {
     this.parseClouds();
 };
 
+METAR.prototype.parseTemperature = function() {
+    var temp = this.peek().match(/^([0-9]+)\/([0-9]+)$/);
+    if (!temp) return;
+    this.next();
+    this.result.temperature = parseInt(temp[1], 10);
+    this.result.dewPointTemperature = parseInt(temp[2], 10);
+};
+
 METAR.prototype.parse = function() {
     this.parseStation();
     this.parseDate();
@@ -239,6 +247,7 @@ METAR.prototype.parse = function() {
     this.parseVisibility();
     this.parseWeather();
     this.parseClouds();
+    this.parseTemperature();
 };
 
 
