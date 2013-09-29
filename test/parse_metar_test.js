@@ -98,6 +98,12 @@ describe("METAR parser", function() {
             var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
             assert.equal(m.dewPointTemperature, 12);
         });
+
+        it("temperature and dew point bellow zero", function(){
+            var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK M04/M07 Q1006");
+            assert.equal(m.temperature, -4);
+            assert.equal(m.dewPointTemperature, -7);
+        });
     });
 
     describe("for weather conditions", function() {

@@ -231,11 +231,16 @@ METAR.prototype.parseClouds = function() {
 };
 
 METAR.prototype.parseTemperature = function() {
-    var temp = this.peek().match(/^([0-9]+)\/([0-9]+)$/);
+    var temp = this.peek().match(/^(M?)([0-9]+)\/(M)?([0-9]+)$/i),
+        temperature, dewPointTemperature;
     if (!temp) return;
     this.next();
-    this.result.temperature = parseInt(temp[1], 10);
-    this.result.dewPointTemperature = parseInt(temp[2], 10);
+
+    temperature = parseInt(temp[2], 10);
+    dewPointTemperature = parseInt(temp[4], 10);
+
+    this.result.temperature = (temp[1] === 'M') ? -temperature : temperature;
+    this.result.dewPointTemperature = (temp[3] === 'M') ? -dewPointTemperature : dewPointTemperature;
 };
 
 METAR.prototype.parse = function() {
