@@ -12,8 +12,8 @@ describe("METAR parser", function() {
 
     it("can parse time of observation", function(){
         var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
-        assert.equal(20, m.time.getHours());
-        assert.equal(50, m.time.getMinutes());
+        assert.equal(17, m.time.getUTCHours());
+        assert.equal(50, m.time.getUTCMinutes());
     });
 
     it("can parse auto", function(){
