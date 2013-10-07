@@ -12,8 +12,8 @@ describe("METAR parser", function() {
 
     it("can parse time of observation", function(){
         var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
-        assert.equal(20, m.time.getHours());
-        assert.equal(50, m.time.getMinutes());
+        assert.equal(17, m.time.getUTCHours());
+        assert.equal(50, m.time.getUTCMinutes());
     });
 
     it("can parse auto", function(){
@@ -97,6 +97,12 @@ describe("METAR parser", function() {
         it("dew point", function(){
             var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
             assert.equal(m.dewPointTemperature, 12);
+        });
+
+        it("temperature and dew point bellow zero", function(){
+            var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK M04/M07 Q1006");
+            assert.equal(m.temperature, -4);
+            assert.equal(m.dewPointTemperature, -7);
         });
     });
 
