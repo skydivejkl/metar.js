@@ -2,8 +2,6 @@
 
 set -eu
 
-cd /cirun
-
 sudo apt-get install python-software-properties
 sudo add-apt-repository -y ppa:chris-lea/node.js
 sudo apt-get update
