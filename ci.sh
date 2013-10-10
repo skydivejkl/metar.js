@@ -1,7 +1,6 @@
 #!/bin/sh
 
 set -eu
-set -x
 
 echo "Building metar.js"
 echo "Running as $(whoami)"
