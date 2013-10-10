@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -eu
+set -x
 
 sudo apt-get install python-software-properties
 sudo add-apt-repository -y ppa:chris-lea/node.js
