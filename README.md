@@ -26,27 +26,46 @@ Get reports from <http://weather.noaa.gov/pub/data/observations/metar/stations/>
 // only required in node or browserify otherwise it's a global.
 var parseMETAR = require("metar");
 
-console.log(parseMETAR("EFJY 172120Z AUTO 30004KT 260V330 CAVOK 11/10 Q1008"));
+console.log(parseMETAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006"));
 ```
 
 ```json
 {
     "station": "EFJY",
-    "time": "2013-12-17T21:20:58.822Z",
+    "time": "2013-12-17T19:50:38.219Z",
     "auto": true,
     "wind": {
-        "speed": 4,
+        "speed": 6,
         "gust": null,
-        "direction": 300,
+        "direction": 270,
         "variation": {
-            "min": 260,
-            "max": 330
+            "min": 220,
+            "max": 310
         },
         "unit": "KT"
     },
-    "cavok": true,
-    "visibility": null,
+    "cavok": false,
+    "visibility": 9999,
     "weather": null,
-    "clouds": null
+    "clouds": [
+        {
+            "abbreviation": "FEW",
+            "meaning": "few",
+            "altitude": 1200,
+            "cumulonimbus": false
+        },
+        {
+            "abbreviation": "SCT",
+            "meaning": "scattered",
+            "altitude": 1500,
+            "cumulonimbus": false
+        },
+        {
+            "abbreviation": "BKN",
+            "meaning": "broken",
+            "altitude": 6000,
+            "cumulonimbus": false
+        }
+    ]
 }
 ```
