@@ -29,3 +29,24 @@ var parseMETAR = require("metar");
 console.log(parseMETAR("EFJY 172120Z AUTO 30004KT 260V330 CAVOK 11/10 Q1008"));
 ```
 
+```json
+{
+    "station": "EFJY",
+    "time": "2013-12-17T21:20:58.822Z",
+    "auto": true,
+    "wind": {
+        "speed": 4,
+        "gust": null,
+        "direction": 300,
+        "variation": {
+            "min": 260,
+            "max": 330
+        },
+        "unit": "KT"
+    },
+    "cavok": true,
+    "visibility": null,
+    "weather": null,
+    "clouds": null
+}
+```
