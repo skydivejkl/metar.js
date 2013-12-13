@@ -8,7 +8,7 @@ Demo: <http://epeli.github.io/metar.js/>
 
 ## Install
 
-node.js
+node.js or browserify
 
     npm install metar
 
@@ -23,6 +23,7 @@ browser
 Get reports from <http://weather.noaa.gov/pub/data/observations/metar/stations/>
 
 ```javascript
+// only required in node or browserify otherwise it's a global.
 var parseMETAR = require("metar");
 
 console.log(parseMETAR("EFJY 172120Z AUTO 30004KT 260V330 CAVOK 11/10 Q1008"));
