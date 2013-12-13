@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/epeli/metar.js.png?branch=master)](https://travis-ci.org/epeli/metar.js)
+
 # metar.js
 
 [METAR](http://en.wikipedia.org/wiki/METAR) (Meteorological Aviation Report) parser for Javascript
