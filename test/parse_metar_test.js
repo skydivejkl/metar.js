@@ -11,7 +11,8 @@ describe("METAR parser", function() {
     });
 
     it("can parse time of observation", function(){
-        var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+        var m = parseMetar("EFJY 181750Z AUTO 29007KT CAVOK 15/12 Q1006");
+		assert.equal(18, m.time.getUTCDate());
         assert.equal(17, m.time.getUTCHours());
         assert.equal(50, m.time.getUTCMinutes());
     });
@@ -85,24 +86,6 @@ describe("METAR parser", function() {
                 cumulonimbus: false,
                 altitude: null
             }], m.clouds);
-        });
-    });
-
-    describe("for temperature", function() {
-        it("basic", function(){
-            var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
-            assert.equal(m.temperature, 15);
-        });
-
-        it("dew point", function(){
-            var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
-            assert.equal(m.dewPointTemperature, 12);
-        });
-
-        it("temperature and dew point bellow zero", function(){
-            var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK M04/M07 Q1006");
-            assert.equal(m.temperature, -4);
-            assert.equal(m.dewPointTemperature, -7);
         });
     });
 
@@ -210,6 +193,34 @@ describe("METAR parser", function() {
                 meaning: "overcast",
                 cumulonimbus: true
             }], m.clouds);
+        });
+
+    });
+
+	describe("for temp/dewpoint", function() {
+        it("can parse it", function() {
+            var m = parseMetar("EFKI 171950Z 00000KT 9999 MIFG FEW012 SCT200 10/11 Q1006");
+			assert.equal(10, m.temperature);
+			assert.equal(11, m.dewpoint);
+        });
+
+		it("can parse neg", function() {
+            var m = parseMetar("KLZZ 302355Z AUTO 00000KT 10SM CLR 04/M02 A3029 RMK AO2 T00391018 10070 20031");
+            assert.equal(4, m.temperature);
+            assert.equal(-2, m.dewpoint);
+        });
+
+    });
+
+	describe("for altimeter", function() {
+        it("can parse inches mercury", function() {
+            var m = parseMetar("EFKI 171950Z 00000KT 9999 MIFG FEW012 SCT200 10/11 Q1006");
+            assert.equal(1006, m.altimeter_hpa);
+        });
+
+        it("can parse hpa", function() {
+            var m = parseMetar("KLZZ 302355Z AUTO 00000KT 10SM CLR 04/M02 A3029 RMK AO2 T00391018 10070 20031");
+            assert.equal(30.29, m.altimeter_in_hg);
         });
 
     });

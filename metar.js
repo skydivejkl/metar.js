@@ -230,17 +230,30 @@ METAR.prototype.parseClouds = function() {
     this.parseClouds();
 };
 
-METAR.prototype.parseTemperature = function() {
-    var temp = this.peek().match(/^(M?)([0-9]+)\/(M)?([0-9]+)$/i),
-        temperature, dewPointTemperature;
-    if (!temp) return;
-    this.next();
+METAR.prototype.parseTempDewpoint = function() {
+	this.next();
+	var replaced = this.current.replace('M','-');
+	var a = replaced.split('/');
+	if( 2 != a.length ) return; // expecting XX/XX
+	this.result.temperature = asInt( a[0] );
+    this.result.dewpoint = asInt( a[1] );
+};
 
-    temperature = parseInt(temp[2], 10);
-    dewPointTemperature = parseInt(temp[4], 10);
-
-    this.result.temperature = (temp[1] === 'M') ? -temperature : temperature;
-    this.result.dewPointTemperature = (temp[3] === 'M') ? -dewPointTemperature : dewPointTemperature;
+METAR.prototype.parseAltimeter  = function() {
+	this.next();
+	if( this.current == undefined ) return;
+	if( this.current.length == 5 && 'A' == this.current[0] ) // inches of mercury if AXXXX
+	{
+		var temp = this.current.substr(1,2);
+		temp += '.';
+		temp += this.current.substr(3,5);	
+		this.result.altimeter_in_hg = parseFloat(temp);
+	}	
+	else if( this.current.length && 'Q'  == this.current[0] )
+	{
+		var temp = this.current.substr(1);
+		this.result.altimeter_hpa = parseInt( temp );
+	}
 };
 
 METAR.prototype.parse = function() {
@@ -252,7 +265,8 @@ METAR.prototype.parse = function() {
     this.parseVisibility();
     this.parseWeather();
     this.parseClouds();
-    this.parseTemperature();
+	this.parseTempDewpoint();
+	this.parseAltimeter();
 };
 
 
