@@ -186,7 +186,7 @@ METAR.prototype.parseRunwayVisibility = function() {
     if (this.result.cavok) return;
     if (this.peek().match(/^R[0-9]+/)) {
         this.next();
-        // TODO: Parse it. I've not seen it in finnish METARs...
+        // TODO: Parse it!
     }
 };
 
@@ -250,6 +250,7 @@ METAR.prototype.parse = function() {
     this.parseWind();
     this.parseCavok();
     this.parseVisibility();
+    this.parseRunwayVisibility();
     this.parseWeather();
     this.parseClouds();
     this.parseTemperature();

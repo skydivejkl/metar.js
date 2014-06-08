@@ -157,6 +157,11 @@ describe("METAR parser", function() {
             }, m.clouds[2]);
         });
 
+        it("runway visibility does not break cloud parsing", function() {
+            var m = parseMetar("EFJY 082120Z AUTO 00000KT 9999 R30/1300U BKN083 BKN101 15/12 Q1013");
+            assert(m.clouds);
+        });
+
         it("can parse without altitude", function() {
             var m = parseMetar("EFKI 172020Z AUTO 00000KT 2600 BR SKC 09/09 Q1006");
             assert.deepEqual([{
