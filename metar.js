@@ -240,20 +240,20 @@ METAR.prototype.parseTempDewpoint = function() {
 };
 
 METAR.prototype.parseAltimeter  = function() {
-	this.next();
-	if( this.current == undefined ) return;
-	if( this.current.length == 5 && 'A' == this.current[0] ) // inches of mercury if AXXXX
-	{
-		var temp = this.current.substr(1,2);
-		temp += '.';
-		temp += this.current.substr(3,5);	
-		this.result.altimeter_in_hg = parseFloat(temp);
-	}	
-	else if( this.current.length && 'Q'  == this.current[0] )
-	{
-		var temp = this.current.substr(1);
-		this.result.altimeter_hpa = parseInt( temp );
-	}
+    this.next();
+    if( this.current == undefined ) return;
+    if( this.current.length == 5 && 'A' == this.current[0] ) // inches of mercury if AXXXX
+    {
+        var temp = this.current.substr(1,2);
+        temp += '.';
+        temp += this.current.substr(3,5);	
+        this.result.altimeter_in_hg = parseFloat(temp);
+    }
+    else if( this.current.length && 'Q'  == this.current[0] )
+    {
+        var temp = this.current.substr(1);
+        this.result.altimeter_hpa = parseInt( temp );
+    }
 };
 
 METAR.prototype.parse = function() {
@@ -266,8 +266,8 @@ METAR.prototype.parse = function() {
     this.parseRunwayVisibility();
     this.parseWeather();
     this.parseClouds();
-	this.parseTempDewpoint();
-	this.parseAltimeter();
+    this.parseTempDewpoint();
+    this.parseAltimeter();
 };
 
 
