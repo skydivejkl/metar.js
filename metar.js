@@ -231,28 +231,29 @@ METAR.prototype.parseClouds = function() {
 };
 
 METAR.prototype.parseTempDewpoint = function() {
-	this.next();
-	var replaced = this.current.replace('M','-');
-	var a = replaced.split('/');
-	if( 2 != a.length ) return; // expecting XX/XX
-	this.result.temperature = asInt( a[0] );
+    this.next();
+    var replaced = this.current.replace("M", "-");
+    var a = replaced.split("/");
+    if( 2 !== a.length ) return; // expecting XX/XX
+    this.result.temperature = asInt( a[0] );
     this.result.dewpoint = asInt( a[1] );
 };
 
 METAR.prototype.parseAltimeter  = function() {
+    var temp;
     this.next();
-    if( this.current == undefined ) return;
-    if( this.current.length == 5 && 'A' == this.current[0] ) // inches of mercury if AXXXX
-    {
-        var temp = this.current.substr(1,2);
-        temp += '.';
-        temp += this.current.substr(3,5);	
-        this.result.altimeter_in_hg = parseFloat(temp);
+    if (this.current === undefined || this.current === null) return;
+
+    // inches of mercury if AXXXX
+    if (this.current.length === 5 && "A" === this.current[0]) {
+        temp = this.current.substr(1, 2);
+        temp += ".";
+        temp += this.current.substr(3, 5);
+        this.result.altimeter_in_hg = parseFloat(temp, 10);
     }
-    else if( this.current.length && 'Q'  == this.current[0] )
-    {
-        var temp = this.current.substr(1);
-        this.result.altimeter_hpa = parseInt( temp );
+    else if (this.current.length && "Q"  === this.current[0]) {
+        temp = this.current.substr(1);
+        this.result.altimeter_hpa = parseInt(temp, 10);
     }
 };
 
