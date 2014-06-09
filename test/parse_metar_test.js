@@ -106,6 +106,19 @@ describe("METAR parser", function() {
                 {"abbreviation":"RA","meaning":"rain"}
                 ],m.weather);
         });
+
+        it("can parse multiple weather conditions", function() {
+            var m = parseMetar("EFJY 092120Z AUTO 05003KT 9999 -SHRA VCSH SCT006 OVC028CB 13/13 Q1014");
+            assert.deepEqual([
+                 { abbreviation: '-', meaning: 'light intensity' },
+                 { abbreviation: 'SH', meaning: 'showers' },
+                 { abbreviation: 'RA', meaning: 'rain' },
+                 { abbreviation: 'VC', meaning: 'in the vicinity' },
+                 { abbreviation: 'SH', meaning: 'showers' }
+            ], m.weather);
+
+            assert.deepEqual(m.clouds.length, 2);
+        });
     });
 
     describe("for clouds", function() {
