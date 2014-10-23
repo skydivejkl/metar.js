@@ -123,6 +123,16 @@ METAR.prototype.parseAuto = function() {
     if (this.result.auto) this.next();
 };
 
+METAR.prototype.parseCorrection = function() {
+    var token = this.peek();
+    this.result.correction = false;
+
+    if (token.lastIndexOf('CC', 0) == 0) {
+        this.result.correction = token.substr(2,1);
+        this.next();
+    }
+};
+
 var variableWind = /^([0-9]{3})V([0-9]{3})$/;
 METAR.prototype.parseWind = function() {
     this.next();
@@ -265,6 +275,7 @@ METAR.prototype.parse = function() {
     this.parseStation();
     this.parseDate();
     this.parseAuto();
+    this.parseCorrection();
     this.parseWind();
     this.parseCavok();
     this.parseVisibility();
