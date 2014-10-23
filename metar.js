@@ -246,7 +246,7 @@ METAR.prototype.parseClouds = function() {
 
 METAR.prototype.parseTempDewpoint = function() {
     this.next();
-    var replaced = this.current.replace("M", "-");
+    var replaced = this.current.replace(/M/g, "-");
     var a = replaced.split("/");
     if( 2 !== a.length ) return; // expecting XX/XX
     this.result.temperature = asInt( a[0] );
