@@ -22,6 +22,11 @@ describe("METAR parser", function() {
         assert.equal(true, m.auto);
     });
 
+    it("can parse correction", function() {
+        var m = parseMetar("CYZF 241700Z CCA 32012G18KT 12SM BKN007 OVC042 M02/M05 A2956");
+        assert.equal("A", m.correction);
+    });
+
     it("can parse metar without auto", function() {
         var m = parseMetar("EFJY 171750Z 29007KT CAVOK 15/12 Q1006");
         assert.equal(290, m.wind.direction);
@@ -226,6 +231,12 @@ describe("METAR parser", function() {
             var m = parseMetar("KLZZ 302355Z AUTO 00000KT 10SM CLR 04/M02 A3029 RMK AO2 T00391018 10070 20031");
             assert.equal(4, m.temperature);
             assert.equal(-2, m.dewpoint);
+        });
+
+        it("can parse both neg", function() {
+            var m = parseMetar("CYZF 241700Z 32012G18KT 12SM BKN007 OVC042 M02/M03 A2956 RMK SC7SC1 SLP024");
+            assert.equal(-2, m.temperature);
+            assert.equal(-3, m.dewpoint);
         });
 
     });
