@@ -123,6 +123,16 @@ METAR.prototype.parseAuto = function() {
     if (this.result.auto) this.next();
 };
 
+METAR.prototype.parseCorrection = function() {
+    var token = this.peek();
+    this.result.correction = false;
+
+    if (token.lastIndexOf('CC', 0) == 0) {
+        this.result.correction = token.substr(2,1);
+        this.next();
+    }
+};
+
 var variableWind = /^([0-9]{3})V([0-9]{3})$/;
 METAR.prototype.parseWind = function() {
     this.next();
@@ -236,7 +246,7 @@ METAR.prototype.parseClouds = function() {
 
 METAR.prototype.parseTempDewpoint = function() {
     this.next();
-    var replaced = this.current.replace("M", "-");
+    var replaced = this.current.replace(/M/g, "-");
     var a = replaced.split("/");
     if( 2 !== a.length ) return; // expecting XX/XX
     this.result.temperature = asInt( a[0] );
@@ -265,6 +275,7 @@ METAR.prototype.parse = function() {
     this.parseStation();
     this.parseDate();
     this.parseAuto();
+    this.parseCorrection();
     this.parseWind();
     this.parseCavok();
     this.parseVisibility();
