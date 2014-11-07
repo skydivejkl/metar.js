@@ -131,6 +131,11 @@ METAR.prototype.parseCorrection = function() {
         this.result.correction = token.substr(2,1);
         this.next();
     }
+
+    if (token.lastIndexOf('COR', 0) == 0) {
+        this.result.correction = true;
+        this.next();
+    }
 };
 
 var variableWind = /^([0-9]{3})V([0-9]{3})$/;
