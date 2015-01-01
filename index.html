@@ -46,18 +46,23 @@
                 try {
                     var result = parseMETAR(input.value);
                 } catch(err) {
-                    output.innerText = "Parse error: " + err.message;
+                    write("Parse error: " + err.message);
                 }
 
                 if (result) {
-                    output.innerText = JSON.stringify(parseMETAR(input.value), null, "    ");
-                    location.hash = escape(input.value);
+                    write(JSON.stringify(parseMETAR(input.value), null, "    "));
+                    location.hash = encodeURIComponent(input.value);
                 }
 
             }
 
+            function write(text) {
+                if("textContent" in output) output.textContent = text;
+                else output.innerText = text;
+            }
+
             if (location.hash) {
-                input.value = unescape(location.hash.substring(1));
+                input.value = decodeURIComponent(location.hash.substring(1));
                 parse();
             }
 
