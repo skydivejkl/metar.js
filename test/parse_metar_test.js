@@ -25,6 +25,9 @@ describe("METAR parser", function() {
     it("can parse correction", function() {
         var m = parseMetar("CYZF 241700Z CCA 32012G18KT 12SM BKN007 OVC042 M02/M05 A2956");
         assert.equal("A", m.correction);
+
+        m = parseMetar("PAOM 302353Z COR 32005KT 10SM CLR M03/M09 A2993");
+        assert.equal(true, m.correction);
     });
 
     it("can parse metar without auto", function() {
