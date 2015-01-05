@@ -69,3 +69,10 @@ console.log(parseMETAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN
     ]
 }
 ```
+
+# Changelog
+
+## 0.2.0
+
+  - Support negative dewpoint and air temp [#10](https://github.com/epeli/metar.js/pull/10)
+
