@@ -5,6 +5,11 @@ var parseMetar = require("../metar");
 
 describe("METAR parser", function() {
 
+    it("can parse type", function(){
+        var m = parseMetar("SPECI EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+        assert.equal("SPECI", m.type);
+    });
+
     it("can parse station", function(){
         var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
         assert.equal("EFJY", m.station);

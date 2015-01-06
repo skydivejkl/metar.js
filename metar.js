@@ -4,6 +4,8 @@
 // http://en.wikipedia.org/wiki/METAR
 // http://www.unc.edu/~haines/metar.html
 
+var TYPES = [ 'METAR', 'SPECI' ];
+
 var CLOUDS = {
     NCD: "no clouds",
     SKC: "sky clear",
@@ -102,6 +104,17 @@ METAR.prototype.next = function() {
 
 METAR.prototype.peek = function() {
     return this.fields[this.i+1];
+};
+
+METAR.prototype.parseType = function() {
+    var token = this.peek();
+
+    if (TYPES.indexOf(token) !== -1) {
+        this.next();
+        this.result.type = this.current;
+    } else {
+        this.result.type = 'METAR';
+    }
 };
 
 METAR.prototype.parseStation = function() {
@@ -277,6 +290,7 @@ METAR.prototype.parseAltimeter  = function() {
 };
 
 METAR.prototype.parse = function() {
+    this.parseType();
     this.parseStation();
     this.parseDate();
     this.parseAuto();
