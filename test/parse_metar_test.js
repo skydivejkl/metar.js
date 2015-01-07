@@ -8,6 +8,12 @@ describe("METAR parser", function() {
     it("can parse type", function(){
         var m = parseMetar("SPECI EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
         assert.equal("SPECI", m.type);
+
+        m = parseMetar("METAR EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+        assert.equal("METAR", m.type);
+
+        m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+        assert.equal("METAR", m.type);
     });
 
     it("can parse station", function(){
