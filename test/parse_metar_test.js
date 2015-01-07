@@ -268,4 +268,13 @@ describe("METAR parser", function() {
 
     });
 
+    describe("for rvr", function() {
+        it("runway can be parsed", function() {
+            var m = parseMetar("EFJY 082120Z AUTO 00000KT 9999 R30/1300U BKN083 BKN101 15/12 Q1013");
+            assert("R30", m.rvr.runway);
+            assert("/", m.rvr.seperator);
+            assert("1300", m.rvr.minValue);
+            assert("U", m.rvr.trend);
+        });
+    });
 });

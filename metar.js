@@ -1,4 +1,6 @@
 (function() {
+
+var parseRVR = require("./rvr");
 // http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
 // https://ww8.fltplan.com/AreaForecast/abbreviations.htm
 // http://en.wikipedia.org/wiki/METAR
@@ -214,7 +216,8 @@ METAR.prototype.parseRunwayVisibility = function() {
     if (this.result.cavok) return;
     if (this.peek().match(/^R[0-9]+/)) {
         this.next();
-        // TODO: Parse it!
+        this.result.rvr = parseRVR(this.current);
+        // TODO: peek is more than one RVR in METAR and parse
     }
 };
 
