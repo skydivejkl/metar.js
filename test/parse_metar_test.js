@@ -5,6 +5,17 @@ var parseMetar = require("../metar");
 
 describe("METAR parser", function() {
 
+    it("can parse type", function(){
+        var m = parseMetar("SPECI EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+        assert.equal("SPECI", m.type);
+
+        m = parseMetar("METAR EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+        assert.equal("METAR", m.type);
+
+        m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
+        assert.equal("METAR", m.type);
+    });
+
     it("can parse station", function(){
         var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
         assert.equal("EFJY", m.station);
@@ -257,4 +268,13 @@ describe("METAR parser", function() {
 
     });
 
+    describe("for rvr", function() {
+        it("runway can be parsed", function() {
+            var m = parseMetar("EFJY 082120Z AUTO 00000KT 9999 R30/1300U BKN083 BKN101 15/12 Q1013");
+            assert("R30", m.rvr.runway);
+            assert("/", m.rvr.seperator);
+            assert("1300", m.rvr.minValue);
+            assert("U", m.rvr.trend);
+        });
+    });
 });

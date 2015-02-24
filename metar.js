@@ -1,8 +1,12 @@
 (function() {
+
+var parseRVR = require("./rvr");
 // http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
 // https://ww8.fltplan.com/AreaForecast/abbreviations.htm
 // http://en.wikipedia.org/wiki/METAR
 // http://www.unc.edu/~haines/metar.html
+
+var TYPES = [ 'METAR', 'SPECI' ];
 
 var CLOUDS = {
     NCD: "no clouds",
@@ -104,6 +108,17 @@ METAR.prototype.peek = function() {
     return this.fields[this.i+1];
 };
 
+METAR.prototype.parseType = function() {
+    var token = this.peek();
+
+    if (TYPES.indexOf(token) !== -1) {
+        this.next();
+        this.result.type = this.current;
+    } else {
+        this.result.type = 'METAR';
+    }
+};
+
 METAR.prototype.parseStation = function() {
     this.next();
     this.result.station = this.current;
@@ -201,7 +216,8 @@ METAR.prototype.parseRunwayVisibility = function() {
     if (this.result.cavok) return;
     if (this.peek().match(/^R[0-9]+/)) {
         this.next();
-        // TODO: Parse it!
+        this.result.rvr = parseRVR(this.current);
+        // TODO: peek is more than one RVR in METAR and parse
     }
 };
 
@@ -277,6 +293,7 @@ METAR.prototype.parseAltimeter  = function() {
 };
 
 METAR.prototype.parse = function() {
+    this.parseType();
     this.parseStation();
     this.parseDate();
     this.parseAuto();
