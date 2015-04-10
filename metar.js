@@ -66,6 +66,32 @@ var WEATHER = {
     FC: "funnel cloud"
 };
 
+var RECENT_WEATHER = {
+    REBLSN: "Moderate/heavy blowing snow (visibility significantly reduced)reduced",
+    REDS: "Dust Storm",
+    REFC: "Funnel Cloud",
+    REFZDZ: "Freezing Drizzle",
+    REFZRA: "Freezing Rain",
+    REGP: "Moderate/heavy snow pellets",
+    REGR: "Moderate/heavy hail",
+    REGS: "Moderate/heavy small hail",
+    REIC: "Moderate/heavy ice crystals",
+    REPL: "Moderate/heavy ice pellets",
+    RERA: "Moderate/heavy rain",
+    RESG: "Moderate/heavy snow grains",
+    RESHGR: "Moderate/heavy hail showers",
+    RESHGS: "Moderate/heavy small hail showers",
+    RESHGS: "Moderate/heavy snow pellet showers",
+    RESHPL: "Moderate/heavy ice pellet showers",
+    RESHRA: "Moderate/heavy rain showers",
+    RESHSN: "Moderate/heavy snow showers",
+    RESN: "Moderate/heavy snow",
+    RESS: "Sandstorm",
+    RETS: "Thunderstorm",
+    REUP: "Unidentified precipitation (AUTO obs. only)",
+    REVA: "Volcanic Ash"
+};
+
 function parseAbbreviation(s, map) {
     var abbreviation, meaning, length = 3;
     if (!s) return;
@@ -180,7 +206,7 @@ METAR.prototype.parseWind = function() {
     this.result.wind.speed = asInt(this.current.slice(3,5));
 
     var unitMatch;
-    if (unitMatch = this.current.match(/KT|MPS|KPH$/)) {
+    if (unitMatch = this.current.match(/KT|MPS|KPH|SM$/)) {
         this.result.wind.unit = unitMatch[0];
     }
     else {
@@ -292,6 +318,17 @@ METAR.prototype.parseAltimeter  = function() {
     }
 };
 
+METAR.prototype.parseRecentSignificantWeather = function() {
+    this.next();
+
+    if (this.current === undefined || this.current === null) return;
+
+    if (RECENT_WEATHER[this.current]) {
+        this.result.recentSignificantWeather = this.current;
+        this.result.recentSignificantWeatherDescription = RECENT_WEATHER[this.current];
+    }
+};
+
 METAR.prototype.parse = function() {
     this.parseType();
     this.parseStation();
@@ -306,9 +343,8 @@ METAR.prototype.parse = function() {
     this.parseClouds();
     this.parseTempDewpoint();
     this.parseAltimeter();
+    this.parseRecentSignificantWeather();
 };
-
-
 
 function parseMETAR(metarString) {
     var m = new METAR(metarString);
