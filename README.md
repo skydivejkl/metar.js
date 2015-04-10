@@ -72,6 +72,12 @@ console.log(parseMETAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN
 
 # Changelog
 
+## 0.3.0
+
+- Parse REUP [#16](https://github.com/skydivejkl/metar.js/pull/16)
+- Added METAR|SPECI type parsing [#15](https://github.com/skydivejkl/metar.js/pull/15)
+- Added RVR parser
+
 ## 0.2.0
 
   - Support negative dewpoint and air temp [#10](https://github.com/epeli/metar.js/pull/10)
