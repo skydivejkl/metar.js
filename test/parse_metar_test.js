@@ -39,6 +39,9 @@ describe("METAR parser", function() {
 
         m = parseMetar("PAOM 302353Z COR 32005KT 10SM CLR M03/M09 A2993");
         assert.equal(true, m.correction);
+
+        m = parseMetar("KCNO 302353Z COR 25013KT 10SM FEW180 23/14 A2994 RMK AO2 SLP133 T02330139 10306 20217 55002");
+        assert.equal(true, m.correction);
     });
 
     it("can parse metar without auto", function() {
@@ -80,7 +83,7 @@ describe("METAR parser", function() {
             assert.equal(42, m.wind.gust);
         });
 
-        it("can MPH speed", function() {
+        it("can parse MPH speed", function() {
             var m = parseMetar("ULLI 172030Z 23004MPS 9999 -SHRA SCT022CB BKN043 OVC066 13/10 Q1010 NOSIG");
             assert.equal(4, m.wind.speed);
             assert.equal("MPS", m.wind.unit);
@@ -231,7 +234,6 @@ describe("METAR parser", function() {
                 cumulonimbus: true
             }], m.clouds);
         });
-
     });
 
     describe("for temp/dewpoint", function() {
@@ -252,7 +254,6 @@ describe("METAR parser", function() {
             assert.equal(-2, m.temperature);
             assert.equal(-3, m.dewpoint);
         });
-
     });
 
     describe("for altimeter", function() {
@@ -265,7 +266,26 @@ describe("METAR parser", function() {
             var m = parseMetar("KLZZ 302355Z AUTO 00000KT 10SM CLR 04/M02 A3029 RMK AO2 T00391018 10070 20031");
             assert.equal(30.29, m.altimeter_in_hg);
         });
+    });
 
+    describe("for recent significant weather", function() {
+        it("can parse Moderate/heavy rain showers [RESHRA]", function() {
+            var m = parseMetar("EFKI 171950Z 00000KT 9999 MIFG FEW012 SCT200 10/11 Q1006 RESHRA");
+            assert.equal("RESHRA", m.recentSignificantWeather);
+            assert.equal("Moderate/heavy rain showers", m.recentSignificantWeatherDescription);
+        });
+
+        it("can parse Auto recent weather Unidentified precipitation", function() {
+            var m = parseMetar("EFKI 171950Z 00000KT 9999 MIFG FEW012 SCT200 10/11 Q1006 REUP");
+            assert.equal("REUP", m.recentSignificantWeather);
+            assert.equal("Unidentified precipitation (AUTO obs. only)", m.recentSignificantWeatherDescription);
+        });
+
+        it("can parse obs without recent weather", function() {
+            var m = parseMetar("EFKI 171950Z 00000KT 9999 MIFG FEW012 SCT200 10/11 Q1006=");
+            assert.equal(null, m.recentSignificantWeather);
+            assert.equal(null, m.recentSignificantWeatherDescription);
+        });
     });
 
     describe("for rvr", function() {
