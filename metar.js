@@ -230,7 +230,13 @@ METAR.prototype.parseCavok = function() {
 };
 
 METAR.prototype.parseVisibility = function() {
+
+    var re = /^([0-9]+)([A-Z]{1,2})/g;
+
     this.result.visibility = null;
+    this.result.visibilityVariation = null;
+    this.result.visibilityVariationDirection = null;
+
     if (this.result.cavok) return;
     this.next();
     if (this.current === "////") return;
@@ -240,7 +246,17 @@ METAR.prototype.parseVisibility = function() {
     // Look for a directional variation report
     if (this.peek().match(/^[0-9]+[N|E|S|W|NW|NE|SW|SE]/)) {
         this.next();
-        this.result.visibilityVariation = this.current;
+
+        while ((matches = re.exec(this.current)) != null) {
+
+            if (matches.index === re.lastIndex) {
+                re.lastIndex++;
+            }
+
+            this.result.visibilityVariation = matches[1];
+            this.result.visibilityVariationDirection = matches[2];
+        }
+
     }
 };
 

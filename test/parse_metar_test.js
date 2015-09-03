@@ -112,7 +112,8 @@ describe("METAR parser", function() {
         it("can parse visibility directional variation", function(){
             var m = parseMetar("EFJY 201120Z 30001KT 9999 1500NW -SN SCT002 BKN007 M17/M18 Q1031");
             assert.equal(9999, m.visibility);
-            assert.equal("1500NW", m.visibilityVariation);
+            assert.equal("1500", m.visibilityVariation);
+            assert.equal("NW", m.visibilityVariationDirection);
         });
     });
 
