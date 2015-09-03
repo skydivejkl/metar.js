@@ -109,6 +109,12 @@ describe("METAR parser", function() {
                 altitude: null
             }], m.clouds);
         });
+        it("can parse visibility directional variation", function(){
+            var m = parseMetar("EFJY 201120Z 30001KT 9999 1500NW -SN SCT002 BKN007 M17/M18 Q1031");
+            assert.equal(9999, m.visibility);
+            assert.equal("1500", m.visibilityVariation);
+            assert.equal("NW", m.visibilityVariationDirection);
+        });
     });
 
     describe("for weather conditions", function() {
@@ -153,6 +159,33 @@ describe("METAR parser", function() {
                 altitude: 3500
             }], m.clouds);
         });
+
+        it("can parse no cloud", function(){
+            // "//////" Element not available from an automated observation.
+            var m = parseMetar("EFVA 171520Z AUTO 31010KT 270V340 9999 ////// 09/03 Q1009");
+            assert.deepEqual(null, m.clouds);
+        });
+
+        it("can parse cloud with second directional visibility", function(){
+            var m = parseMetar("EFJY 201120Z 30001KT 9999 1500NW -SN SCT002 BKN007 M17/M18 Q1031");
+
+            assert.deepEqual({
+                abbreviation: "SCT",
+                meaning: "scattered",
+                cumulonimbus: false,
+                altitude: 200
+            }, m.clouds[0]);
+
+            assert.deepEqual({
+                abbreviation: "BKN",
+                meaning: "broken",
+                cumulonimbus: false,
+                altitude: 700
+            }, m.clouds[1]);
+
+        });
+
+
         it("can parse multiple cloud levels", function(){
             var m = parseMetar("EFVR 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN060 13/12 Q1006");
             assert.deepEqual({
