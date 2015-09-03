@@ -236,6 +236,12 @@ METAR.prototype.parseVisibility = function() {
     if (this.current === "////") return;
     this.result.visibility = asInt(this.current.slice(0,4));
     // TODO: Direction too. I've not seen it in finnish METARs...
+
+    // Look for a directional variation report
+    if (this.peek().match(/^[0-9]+[N|E|S|W|NW|NE|SW|SE]/)) {
+        this.next();
+        this.result.visibilityVariation = this.current;
+    }
 };
 
 METAR.prototype.parseRunwayVisibility = function() {
