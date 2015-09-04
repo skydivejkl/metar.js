@@ -56,6 +56,12 @@ describe("METAR parser", function() {
     });
 
     describe("for winds", function() {
+
+        it("can handle no wind", function(){
+            var m = parseMetar("KLQK 310035Z AUTO 10SM CLR 09/07 A2998 RMK AO2 T00850070");
+            assert.equal(null, m.wind.direction);
+        });
+
         it("can parse direction", function(){
             var m = parseMetar("EFJY 171750Z AUTO 29007KT CAVOK 15/12 Q1006");
             assert.equal(290, m.wind.direction);
@@ -254,6 +260,12 @@ describe("METAR parser", function() {
             assert.equal(-2, m.temperature);
             assert.equal(-3, m.dewpoint);
         });
+
+        it("can parse when no wind", function(){
+            var m = parseMetar("KLQK 310035Z AUTO 10SM CLR 09/07 A2998 RMK AO2 T00850070");
+            assert.equal(9, m.temperature);
+            assert.equal(7, m.dewpoint);
+        });
     });
 
     describe("for altimeter", function() {
@@ -266,6 +278,12 @@ describe("METAR parser", function() {
             var m = parseMetar("KLZZ 302355Z AUTO 00000KT 10SM CLR 04/M02 A3029 RMK AO2 T00391018 10070 20031");
             assert.equal(30.29, m.altimeter_in_hg);
         });
+
+        it("can parse when no wind", function(){
+            var m = parseMetar("KLQK 310035Z AUTO 10SM CLR 09/07 A2998 RMK AO2 T00850070");
+            assert.equal(29.98, m.altimeter_in_hg);
+        });
+
     });
 
     describe("for recent significant weather", function() {
