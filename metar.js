@@ -1,6 +1,9 @@
 (function() {
 
-var parseRVR = require("./rvr");
+    if(typeof require !== 'undefined') {
+        var parseRVR = require("./rvr");
+    }
+
 // http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
 // https://ww8.fltplan.com/AreaForecast/abbreviations.htm
 // http://en.wikipedia.org/wiki/METAR
