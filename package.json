@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest"
   },
-  "repository": "https://github.com/epeli/metarjs.git",
+  "repository": "https://github.com/skydivejkl/metarjs.git",
   "author": "Esa-Matti Suuronen",
   "license": "MIT",
   "devDependencies": {

@@ -1,10 +1,10 @@
-[![Build Status](https://travis-ci.org/epeli/metar.js.png?branch=master)](https://travis-ci.org/epeli/metar.js)
+[![Build Status](https://travis-ci.org/skydivejkl/metar.js.png?branch=master)](https://travis-ci.org/skydivejkl/metar.js)
 
 # metar.js
 
 [METAR](http://en.wikipedia.org/wiki/METAR) (Meteorological Aviation Report) parser for Javascript
 
-Demo: <http://epeli.github.io/metar.js/>
+Demo: <http://skydivejkl.github.io/metar.js/>
 
 ## Install
 
@@ -80,5 +80,5 @@ console.log(parseMETAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN
 
 ## 0.2.0
 
-  - Support negative dewpoint and air temp [#10](https://github.com/epeli/metar.js/pull/10)
+  - Support negative dewpoint and air temp [#10](https://github.com/skydivejkl/metar.js/pull/10)
 
