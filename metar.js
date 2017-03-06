@@ -281,6 +281,7 @@
         if (this.peek().match(/^[0-9]+[N|E|S|W|NW|NE|SW|SE]/)) {
             this.next();
 
+            var matches;
             while ((matches = re.exec(this.current)) != null) {
                 if (matches.index === re.lastIndex) {
                     re.lastIndex++;
