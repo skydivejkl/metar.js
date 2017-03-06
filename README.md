@@ -72,6 +72,12 @@ console.log(parseMETAR("EFJY 171950Z AUTO 27006KT 220V310 9999 FEW012 SCT015 BKN
 
 # Changelog
 
+### 1.0.0
+
+- Renamed `altimeter_in_hg` to `altimeterInHg` and `altimeter_hpa` to `altimeterInHpa` for consistency
+- Works in browsers without precompiling
+- Bunch of bug fixes
+
 ## 0.3.0
 
 - Parse REUP [#16](https://github.com/skydivejkl/metar.js/pull/16)
