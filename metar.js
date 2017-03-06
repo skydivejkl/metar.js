@@ -216,13 +216,17 @@
 
     var variableWind = /^([0-9]{3})V([0-9]{3})$/;
     METAR.prototype.parseWind = function() {
-        this.next();
         this.result.wind = {
             speed: null,
             gust: null,
             direction: null,
             variation: null,
         };
+
+        if (this.peek().match(/^[0-9]{1,4}(SM?)/)) {
+            return;
+        }
+        this.next();
 
         var direction = this.current.slice(0, 3);
         if (direction === "VRB") {
