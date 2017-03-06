@@ -1,9 +1,7 @@
-/*global it:true, describe:true */
 var assert = require("assert");
-var parseRVR = require("../rvr");
+var {parseRVR} = require("../metar");
 
 describe("RVR parser", function() {
-
     it("can handle null", function() {
         var m = parseRVR(null);
         assert.equal(null, m.runway);

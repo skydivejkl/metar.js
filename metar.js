@@ -1,9 +1,45 @@
 (function() {
-    var parseRVR = require("./rvr");
     // http://www.met.tamu.edu/class/metar/metar-pg10-sky.html
     // https://ww8.fltplan.com/AreaForecast/abbreviations.htm
     // http://en.wikipedia.org/wiki/METAR
     // http://www.unc.edu/~haines/metar.html
+
+    var re = /(R\d{2})([L|R|C])?(\/)([P|M])?(\d+)(?:([V])([P|M])?(\d+))?([N|U|D])?(FT)?/g;
+
+    function RVR(rvrString) {
+        this.result = {};
+        this.rvrString = rvrString;
+        this.parse();
+    }
+
+    RVR.prototype.parse = function() {
+        var matches;
+
+        while ((matches = re.exec(this.rvrString)) != null) {
+            if (matches.index === re.lastIndex) {
+                re.lastIndex++;
+            }
+
+            this.result = {
+                runway: matches[1],
+                direction: matches[2],
+                seperator: matches[3],
+                minIndicator: matches[4],
+                minValue: matches[5],
+                variableIndicator: matches[6],
+                maxIndicator: matches[7],
+                maxValue: matches[8],
+                trend: matches[9],
+                unitsOfMeasure: matches[10],
+            };
+        }
+    };
+
+    function parseRVR(rvrString) {
+        var m = new RVR(rvrString);
+        m.parse();
+        return m.result;
+    }
 
     var TYPES = ["METAR", "SPECI"];
 
@@ -346,6 +382,8 @@
         m.parse();
         return m.result;
     }
+
+    parseMETAR.parseRVR = parseRVR;
 
     if (typeof module !== "undefined") {
         module.exports = parseMETAR;
