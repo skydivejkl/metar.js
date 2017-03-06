@@ -44,6 +44,20 @@ describe("METAR parser", function() {
             "KCNO 302353Z COR 25013KT 10SM FEW180 23/14 A2994 RMK AO2 SLP133 T02330139 10306 20217 55002"
         );
         assert.equal(true, m.correction);
+
+        // The correction can appear here too
+        m = parseMetar("METAR COR EFUT 060620Z 01008KT CAVOK M10/M12 Q1021=");
+        expect(m.correction).toEqual(true);
+
+        // Just assert that the values are parsed
+        expect(m.dewpoint).toEqual(-12);
+        expect(m.wind).toEqual({
+            direction: 10,
+            gust: null,
+            speed: 8,
+            unit: "KT",
+            variation: null,
+        });
     });
 
     it("can parse metar without auto", function() {

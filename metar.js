@@ -200,6 +200,10 @@
     };
 
     METAR.prototype.parseCorrection = function() {
+        if (this.result.correction) {
+            return;
+        }
+
         var token = this.peek();
         this.result.correction = false;
 
@@ -385,10 +389,11 @@
 
     METAR.prototype.parse = function() {
         this.parseType();
+        this.parseCorrection();
         this.parseStation();
         this.parseDate();
         this.parseAuto();
-        this.parseCorrection();
+        this.parseCorrection(); // Second possible position for the correction
         this.parseWind();
         this.parseCavok();
         this.parseVisibility();
