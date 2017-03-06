@@ -10,8 +10,11 @@
   "author": "Esa-Matti Suuronen",
   "license": "MIT",
   "devDependencies": {
-    "jest": "^19.0.2"
+    "eslint": "^3.17.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-react": "^6.10.0",
+    "jest": "^19.0.2",
+    "prettier": "^0.21.0"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

@@ -1,0 +1,41 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "parserOptions": {
+      "sourceType": "module",
+      "ecmaVersion": 5
+  },
+  "env": {
+      "node": true,
+      "jest": true,
+      "browser": true
+  },
+  "globals": {
+    "Promise": true
+  },
+  "plugins": [
+    "import"
+  ],
+  "rules": {
+    "no-constant-condition": 0,
+    "no-unused-expressions": 2,
+    "semi": [1, "always"],
+    "comma-dangle": [1, "always-multiline"],
+    "no-restricted-globals": [2, "self", "Text"],
+    "no-console": 0,
+    "no-undef": 2,
+    "block-scoped-var": 2,
+    "no-unused-vars": 1,
+    "no-trailing-spaces": 1,
+    "keyword-spacing": 1,
+    "object-curly-spacing": [1, "never"],
+    "curly": [2, "multi-line"],
+    "quotes": [1, "double", {"avoidEscape": true}],
+    "import/no-unresolved": [2, {"commonjs": true}],
+    "indent": [1, 4],
+    "no-class-assign": 0
+  }
+}
