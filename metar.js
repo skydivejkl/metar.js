@@ -367,10 +367,10 @@
             temp = this.current.substr(1, 2);
             temp += ".";
             temp += this.current.substr(3, 5);
-            this.result.altimeter_in_hg = parseFloat(temp, 10);
+            this.result.altimeterInHg = parseFloat(temp, 10);
         } else if (this.current.length && "Q" === this.current[0]) {
             temp = this.current.substr(1);
-            this.result.altimeter_hpa = parseInt(temp, 10);
+            this.result.altimeterInHpa = parseInt(temp, 10);
         }
     };
 

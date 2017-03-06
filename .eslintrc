@@ -20,6 +20,7 @@
     "import"
   ],
   "rules": {
+    "camelcase": 2,
     "no-constant-condition": 0,
     "no-unused-expressions": 2,
     "semi": [1, "always"],

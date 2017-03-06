@@ -438,14 +438,14 @@ describe("METAR parser", function() {
             var m = parseMetar(
                 "EFKI 171950Z 00000KT 9999 MIFG FEW012 SCT200 10/11 Q1006"
             );
-            assert.equal(1006, m.altimeter_hpa);
+            assert.equal(1006, m.altimeterInHpa);
         });
 
         it("can parse hpa", function() {
             var m = parseMetar(
                 "KLZZ 302355Z AUTO 00000KT 10SM CLR 04/M02 A3029 RMK AO2 T00391018 10070 20031"
             );
-            assert.equal(30.29, m.altimeter_in_hg);
+            assert.equal(30.29, m.altimeterInHg);
         });
     });
 
