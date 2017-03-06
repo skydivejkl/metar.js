@@ -134,6 +134,26 @@ describe("METAR parser", function() {
             assert.equal("1500", m.visibilityVariation);
             assert.equal("NW", m.visibilityVariationDirection);
         });
+
+        it("can parse clouds with a direction thing?", () => {
+            var m = parseMetar(
+                "EFJY 201120Z 30001KT 9999 1500NW -SN SCT002 BKN007 M17/M18 Q1031"
+            );
+            expect(m.clouds).toEqual([
+                {
+                    abbreviation: "SCT",
+                    altitude: 200,
+                    cumulonimbus: false,
+                    meaning: "scattered",
+                },
+                {
+                    abbreviation: "BKN",
+                    altitude: 700,
+                    cumulonimbus: false,
+                    meaning: "broken",
+                },
+            ]);
+        });
     });
 
     describe("for weather conditions", function() {
