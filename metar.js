@@ -266,12 +266,30 @@
     };
 
     METAR.prototype.parseVisibility = function() {
+        var re = /^([0-9]+)([A-Z]{1,2})/g;
+        this.result.visibility = null;
+        this.result.visibilityVariation = null;
+        this.result.visibilityVariationDirection = null;
+
         this.result.visibility = null;
         if (this.result.cavok) return;
         this.next();
         if (this.current === "////") return;
         this.result.visibility = asInt(this.current.slice(0, 4));
-        // TODO: Direction too. I've not seen it in finnish METARs...
+
+        // Look for a directional variation report
+        if (this.peek().match(/^[0-9]+[N|E|S|W|NW|NE|SW|SE]/)) {
+            this.next();
+
+            while ((matches = re.exec(this.current)) != null) {
+                if (matches.index === re.lastIndex) {
+                    re.lastIndex++;
+                }
+
+                this.result.visibilityVariation = matches[1];
+                this.result.visibilityVariationDirection = matches[2];
+            }
+        }
     };
 
     METAR.prototype.parseRunwayVisibility = function() {
