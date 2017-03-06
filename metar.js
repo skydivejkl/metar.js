@@ -79,7 +79,7 @@
         RESG: "Moderate/heavy snow grains",
         RESHGR: "Moderate/heavy hail showers",
         RESHGS: "Moderate/heavy small hail showers",
-        RESHGS: "Moderate/heavy snow pellet showers",
+        // RESHGS: "Moderate/heavy snow pellet showers", // dual meaning?
         RESHPL: "Moderate/heavy ice pellet showers",
         RESHRA: "Moderate/heavy rain showers",
         RESHSN: "Moderate/heavy snow showers",
