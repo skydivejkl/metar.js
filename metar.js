@@ -297,6 +297,27 @@
         }
     };
 
+    METAR.prototype.parseVisibilityFraction = function() {
+        var re = /^([0-9]+)\/([0-9]+)([A-Z]{1,2})/g;
+
+        if (this.result.cavok) return;
+        if (this.current === "////") return;
+
+        if (this.peek().match(re)) {
+            this.next();
+            var matches;
+            while ((matches = re.exec(this.current)) != null) {
+                if (matches.index === re.lastIndex) {
+                    re.lastIndex++;
+                }
+
+                var numerator = asInt(matches[1]);
+                var denominator = asInt(matches[2]);
+                this.result.visibility += (numerator / denominator);
+            }
+        }
+    };
+
     METAR.prototype.parseRunwayVisibility = function() {
         if (this.result.cavok) return;
         if (this.peek().match(/^R[0-9]+/)) {
@@ -397,6 +418,7 @@
         this.parseWind();
         this.parseCavok();
         this.parseVisibility();
+        this.parseVisibilityFraction();
         this.parseRunwayVisibility();
         this.parseWeather();
         this.parseClouds();

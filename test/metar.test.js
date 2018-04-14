@@ -149,6 +149,13 @@ describe("METAR parser", function() {
             assert.equal("NW", m.visibilityVariationDirection);
         });
 
+        it("can parse visibility with a fraction (2 1/2SM)", function () {
+            var m = parseMetar(
+                "KPWT 141733Z AUTO 24006KT 2 1/2SM -RA BR BKN005 OVC015 08/07 A3020 RMK AO2 CIG 004V008 P0001"
+            );
+            assert.equal(2.5, m.visibility);
+        });
+
         it("can parse clouds with a direction thing?", () => {
             var m = parseMetar(
                 "EFJY 201120Z 30001KT 9999 1500NW -SN SCT002 BKN007 M17/M18 Q1031"
