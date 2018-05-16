@@ -6,7 +6,7 @@
   "scripts": {
     "test": "eslint metar.js test/*.js && jest"
   },
-  "repository": "https://github.com/skydivejkl/metarjs.git",
+  "repository": "https://github.com/skydivejkl/metar.js",
   "author": "Esa-Matti Suuronen",
   "license": "MIT",
   "devDependencies": {
